@@ -3,9 +3,15 @@ import './style.css'
 import nextAudio from '../../Assets/buttonclick.mp3'
 import moveAudio from '../../Assets/move.mp3'
 import ProgressBar from './ProgressBar';
+const greeTick = 'https://e7.pngegg.com/pngimages/341/867/png-clipart-white-check-with-green-background-illustration-fingerprint-comcast-circle-symbol-technology-tick-miscellaneous-angle.png';
+const redCross = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-JVTN9BUYKRqAUaQfK7noC02bmBZY25lRiw&usqp=CAU';
+
+
+
 const Quiz = (props) => {
-  const {questions, scores} = props.states;
-  const {backAudio} = props.actions;
+  const {questions=[], scores} = props.states;
+  
+
   const [nextButtonSound] = useState(new Audio(nextAudio));
   const [moveSound] = useState(new Audio(moveAudio));
   const [currQues, setCurrentQues] = useState(0);
@@ -18,6 +24,9 @@ const Quiz = (props) => {
   const [matches, setMatches] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
   const [imageSize, setImageSize] = useState(0);
+
+
+
   const reset = () => {
     setActiveElemLeft(-1);
     setActiveElemRight(-1);
@@ -32,6 +41,7 @@ const Quiz = (props) => {
     }
     setIsChecked(false);
   }
+  
   const nextQues = () =>{
     let score = 0;
     for(let i=0;i<totalMatch;i++){
@@ -73,11 +83,11 @@ const Quiz = (props) => {
     setRightColumn(rightColumn);
     setTotalMatch(totalMatch-1);
   }
+
   const match = () => {
     moveSound.play();
     let i = activeElemLeft;
     let j = activeElemRight;
-    const distanceLeft = 74*(activeElemLeft - totalMatch);
     while(i>totalMatch){
         const temp = leftColumn[i];
         leftColumn[i] = leftColumn[i-1];
@@ -156,6 +166,10 @@ const Quiz = (props) => {
     }
   },[activeElemLeft,activeElemRight])
 
+  if(!questions.length){
+    return null;
+  }
+
   return (
         <>
         <ProgressBar states={{currQues, total: questions.length}}/>
@@ -183,7 +197,7 @@ const Quiz = (props) => {
                 {
                     rightColumn.map((image, i)=>(
                         <div key={i} id={`result${i}`} className="result_box">
-                            <img src={matches[i]===questions[currQues].correctMatch[i]?'https://e7.pngegg.com/pngimages/341/867/png-clipart-white-check-with-green-background-illustration-fingerprint-comcast-circle-symbol-technology-tick-miscellaneous-angle.png':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-JVTN9BUYKRqAUaQfK7noC02bmBZY25lRiw&usqp=CAU'} width={`${imageSize}px`} height={`${imageSize}px`} alt=""/>
+                            <img src={matches[i]===questions[currQues].correctMatch[i]?greeTick:redCross} width={`${imageSize}px`} height={`${imageSize}px`} alt=""/>
                         </div>
                         
                     ))
