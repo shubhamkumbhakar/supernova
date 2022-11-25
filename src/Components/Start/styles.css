@@ -1,5 +1,6 @@
 .startscreen{
-    height: 100vh;
+    height: 97vh;
+    max-height: 100vh;
     background-image: url('https://i.pinimg.com/originals/d7/57/e9/d757e9a82c599ab4634ebc5f20dbc82f.gif');
     background-repeat: no-repeat;
     background-size: cover;

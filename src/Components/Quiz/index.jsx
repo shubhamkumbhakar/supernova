@@ -1,9 +1,11 @@
 import {useEffect, useState} from 'react'
 import './style.css'
-import sound from '../../Assets/buttonclick.mp3'
+import nextAudio from '../../Assets/buttonclick.mp3'
+import moveAudio from '../../Assets/move.mp3'
 import ProgressBar from './ProgressBar';
 const Quiz = (props) => {
-  const [audio] = useState(new Audio(sound));
+  const [nextButtonSound] = useState(new Audio(nextAudio));
+  const [moveSound] = useState(new Audio(moveAudio));
   const [currQues, setCurrentQues] = useState(0);
   const [activeElemLeft, setActiveElemLeft] = useState(-1);
   const [activeElemRight, setActiveElemRight] = useState(-1);
@@ -36,7 +38,7 @@ const Quiz = (props) => {
     }
     scores[currQues]=score;
     setScores(scores);
-    audio.play();
+    nextButtonSound.play();
     reset();
     const n = questions.length;
     if(currQues<n-1){
@@ -53,6 +55,7 @@ const Quiz = (props) => {
   }
 
   const unMatch = () => {
+    moveSound.play();
     let i = activeElemLeft>=0?activeElemLeft:activeElemRight;
     while(i<totalMatch-1){
         const tempLeft = leftColumn[i];
@@ -70,6 +73,7 @@ const Quiz = (props) => {
     setTotalMatch(totalMatch-1);
   }
   const match = () => {
+    moveSound.play();
     let i = activeElemLeft;
     let j = activeElemRight;
     const distanceLeft = 74*(activeElemLeft - totalMatch);
@@ -97,7 +101,7 @@ const Quiz = (props) => {
         if(matches[i]===questions[currQues].correctMatch[i]){
             score++;
             for(let j=0;j<questions[currQues].leftColumn.length;j++){
-                if(questions[currQues].leftColumn[j].optionIndex == i){
+                if(questions[currQues].leftColumn[j].optionIndex === i){
                     document.getElementById(`imgLeft${j}`).style.backgroundColor = 'green';
                     document.getElementById(`imgRight${j}`).style.backgroundColor = 'green';
                 }
@@ -134,7 +138,7 @@ const Quiz = (props) => {
   }
 
   useEffect(()=>{
-    const size = 200/questions[currQues].countOption;
+    const size = 170/questions[currQues].countOption;
     setImageSize(size);
     setLeftColumn(questions[currQues].leftColumn);
     setRightColumn(questions[currQues].rightColumn);
