@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@700&display=swap');
+.scorecard__heading{
+    margin-top: 50px;
+}
+
+.scorecard__components{
+    display: flex;
+    flex-direction: column;
+}
+.outer_wrapper{
+    background-image: url('https://media.tenor.com/ajDfoSB-_TwAAAAM/spinning-background.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 60%;
+    margin: auto;
+    margin-top: 10px;
+    background-color: skyblue;
+    border: 6px solid rgb(161, 161, 196);
+    border-radius: 55px 55px 25px 25px;
+    padding: 20px;
+}
+
+.inner_wrapper{
+    background-color: rgb(23, 37, 82);
+    border: 4px solid #fff;
+    border-radius: 55px 55px 25px 25px;
+    padding: 30px;
+    color: #fff;
+}
+
+.total_text{
+    margin-top: 10px;
+    font-family: 'Slackey', cursive;
+    font-size: 30px;
+}
+.score_number{
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+.score_number span{
+    font-size: 60px;
+    font-family: 'Signika Negative', sans-serif;
+}
+.restart{
+    cursor: pointer;
+}
+
+.score_details_bar_container{
+    margin: auto 0;
+    margin-top: 20px;
+    border-radius: 10px;
+    width: 70%;
+    background-color: #ddd;
+    border: 4px solid rgb(161, 161, 196);;
+}
+
+.score_details_bar{
+    width: 0;
+    height: 20px;
+    border-radius: 10px;
+    background-color: rgb(211, 230, 40);
+    text-align: center;
+    line-height: 30px;
+    color: white; 
+    transition: width 0.5s ease-out;
+}
+
+.score_details_wrapper{
+    width: 80%;
+    margin: auto;
+}
+.score_details_bar_wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-10px);
+}
+
+.score_details_qindex{
+    border: 4px solid rgb(161, 161, 196);;
+    border-radius: 35%;
+    padding: 10px;
+    margin: 7px;
+    transform: translateX(15px);
+    background-color: #fff;
+    font-family: 'Signika Negative', sans-serif;
+    font-size: 20px;
+}
+
+.score_details_restart{
+    width: max-content;
+    margin: auto;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: rgb(206, 240, 250);
+    
+}
+
+.score_details_heading{
+    font-family: 'Signika Negative', sans-serif;
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+@media (min-width:750px){
+    .scorecard__components{
+        flex-direction: row;
+        width: 70%;
+        margin: auto;
+        gap: 0;
+    }
+    .up{
+        flex: 50%;
+    }
+    .down{
+        flex: 50%;
+    }
+    .outer_wrapper{
+        margin-top: 60px;
+    }
+}

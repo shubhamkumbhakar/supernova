@@ -131,6 +131,10 @@ const questions = [
         {
           optionIndex: 1,
           url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcBGsvgDYtlSc6m_NiFj6z1jZmcF3YA-Nf_rh5a3fI6OJWNgQAANITICydncfeTFGQPek&usqp=CAU",
+        },
+        {
+          optionIndex: 2,
+          url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcBGsvgDYtlSc6m_NiFj6z1jZmcF3YA-Nf_rh5a3fI6OJWNgQAANITICydncfeTFGQPek&usqp=CAU",
         }
       ],
       rightColumn: [
@@ -141,10 +145,14 @@ const questions = [
         {
           optionIndex: 1,
           url: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/LetterB.svg/640px-LetterB.svg.png",
+        },
+        {
+          optionIndex: 2,
+          url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcBGsvgDYtlSc6m_NiFj6z1jZmcF3YA-Nf_rh5a3fI6OJWNgQAANITICydncfeTFGQPek&usqp=CAU",
         }
       ],
-      countOption: 2,
-      correctMatch: [1,0]
+      countOption: 3,
+      correctMatch: [1,0,2]
     },
     {
       id: 5,
@@ -218,17 +226,15 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState('start');
   const [userMatches, setUserMatches] = useState([]);
   const [scores, setScores] = useState([]);
-  useEffect(()=>{
-    backAudio.play();
-  },[])
+  
   return (
     <div className="App">
       {
         currentScreen==='quiz'?
-          <Quiz states={{questions, userMatches, scores}} actions={{setCurrentScreen, setUserMatches, setScores}}/>:
+          <Quiz states={{questions, userMatches, scores}} actions={{setCurrentScreen, setUserMatches, setScores, backAudio}}/>:
         currentScreen==='score'?
-          <ScoreCard states={{questions, scores}} actions={{setCurrentScreen}}/>:
-        <Start state={{questions}} actions={{setCurrentScreen}}/>
+          <ScoreCard states={{questions, scores}} actions={{setCurrentScreen, backAudio}}/>:
+        <Start state={{questions}} actions={{setCurrentScreen, backAudio}}/>
       }
     </div>
   );

@@ -5,17 +5,17 @@ const ProgressBar = (props) => {
   const {currQues, total} = props.states;
   useEffect(()=>{
     const currPercent = ((currQues+1)*100)/total;
-    const percent = (currQues*100)/total;
-    console.log(percent);
+    const percent = ((currQues+0)*100)/total;
+    console.log(currPercent, percent)
     document.getElementById('currbar').style.width = currPercent + "%";
     document.getElementById('bar').style.width = percent + "%";
   },[currQues]);
   return (
     <div id="progress">
         <div id="currbar">
-            <div id="bar">
-
-            </div>
+          <div style={{width:'90vw'}}>
+            <div id="bar"></div>
+          </div> 
         </div>
     </div>
   )

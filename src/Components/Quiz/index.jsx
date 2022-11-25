@@ -4,12 +4,13 @@ import nextAudio from '../../Assets/buttonclick.mp3'
 import moveAudio from '../../Assets/move.mp3'
 import ProgressBar from './ProgressBar';
 const Quiz = (props) => {
+  const {questions, scores} = props.states;
+  const {backAudio} = props.actions;
   const [nextButtonSound] = useState(new Audio(nextAudio));
   const [moveSound] = useState(new Audio(moveAudio));
   const [currQues, setCurrentQues] = useState(0);
   const [activeElemLeft, setActiveElemLeft] = useState(-1);
   const [activeElemRight, setActiveElemRight] = useState(-1);
-  const {questions, scores} = props.states;
   const [leftColumn, setLeftColumn] = useState([]);
   const [rightColumn, setRightColumn] = useState([]);
   const {setCurrentScreen, setScores} = props.actions;
@@ -18,6 +19,8 @@ const Quiz = (props) => {
   const [isChecked, setIsChecked] = useState(false);
   const [imageSize, setImageSize] = useState(0);
   const reset = () => {
+    setActiveElemLeft(-1);
+    setActiveElemRight(-1);
     setMatches([]);
     document.getElementById('check-message').innerHTML = ``;
     setLeftColumn(questions[currQues].leftColumn);
@@ -45,10 +48,8 @@ const Quiz = (props) => {
         setCurrentQues(currQues+1);
     }else{
         document.getElementById('bar').style.width = "100%";
-        setTotalMatch(100);
         setTimeout(()=>{
             setCurrentScreen('score');
-            setTotalMatch(0);
         },200)
         
     }
@@ -100,19 +101,6 @@ const Quiz = (props) => {
      for(let i=0;i<totalMatch;i++){
         if(matches[i]===questions[currQues].correctMatch[i]){
             score++;
-            for(let j=0;j<questions[currQues].leftColumn.length;j++){
-                if(questions[currQues].leftColumn[j].optionIndex === i){
-                    document.getElementById(`imgLeft${j}`).style.backgroundColor = 'green';
-                    document.getElementById(`imgRight${j}`).style.backgroundColor = 'green';
-                }
-            }
-        }else{
-            for(let j=0;j<questions[currQues].leftColumn.length;j++){
-                if(questions[currQues].leftColumn[j].optionIndex == i){
-                    document.getElementById(`imgLeft${j}`).style.backgroundColor = 'red';
-                    document.getElementById(`imgRight${j}`).style.backgroundColor = 'red';
-                }
-            } 
         }
      }
      document.getElementById('check-message').innerHTML = `You made ${score} correct answer${score>1?'s':''}.`
@@ -159,9 +147,12 @@ const Quiz = (props) => {
         if(isChecked){
             return;
         }
+        console.log(matches);
         unMatch();
         setActiveElemLeft(-1);
         setActiveElemRight(-1);
+    }else{
+        return;
     }
   },[activeElemLeft,activeElemRight])
 
@@ -173,7 +164,7 @@ const Quiz = (props) => {
             <div className='quiz__left'>
                 {
                     leftColumn.map((image, i)=>(
-                        <div key={i} id={`imgLeft${i}`} className={activeElemLeft===i?"quiz__imagebox active-left":i<totalMatch?"quiz__imagebox matched-left":"quiz__imagebox"} style={{height:`${imageSize}px`}} onClick={()=>toggleSelectionLeft(i)}>
+                        <div key={i} id={`imgLeft${i}`} className={(activeElemLeft===i && i>=totalMatch)?"quiz__imagebox active-left":i<totalMatch?"quiz__imagebox matched-left":"quiz__imagebox"} style={{height:`${imageSize}px`}} onClick={()=>toggleSelectionLeft(i)}>
                             <img src={image.url} width='auto' height={`${imageSize}px`} alt=""/>
                         </div>
                     ))
@@ -182,9 +173,19 @@ const Quiz = (props) => {
             <div className='quiz__right'>
                 {
                     rightColumn.map((image, i)=>(
-                        <div key={i} id={`imgRight${i}`} className={activeElemRight===i?"quiz__imagebox active-right":i<totalMatch?"quiz__imagebox matched-right":"quiz__imagebox"} style={{height:`${imageSize}px`}} onClick={()=>toggleSelectionRight(i)}>
+                        <div key={i} id={`imgRight${i}`} className={(activeElemRight===i && i>=totalMatch)?"quiz__imagebox active-right":i<totalMatch?"quiz__imagebox matched-right":"quiz__imagebox"} style={{height:`${imageSize}px`}} onClick={()=>toggleSelectionRight(i)}>
                             <img src={image.url} width={`${imageSize}px`} height={`${imageSize}px`} alt=""/>
                         </div>
+                    ))
+                }
+            </div>
+            <div className={isChecked?'result':'hide'}>
+                {
+                    rightColumn.map((image, i)=>(
+                        <div key={i} id={`result${i}`} className="result_box">
+                            <img src={matches[i]===questions[currQues].correctMatch[i]?'https://e7.pngegg.com/pngimages/341/867/png-clipart-white-check-with-green-background-illustration-fingerprint-comcast-circle-symbol-technology-tick-miscellaneous-angle.png':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-JVTN9BUYKRqAUaQfK7noC02bmBZY25lRiw&usqp=CAU'} width={`${imageSize}px`} height={`${imageSize}px`} alt=""/>
+                        </div>
+                        
                     ))
                 }
             </div>
