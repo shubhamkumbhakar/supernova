@@ -36,7 +36,6 @@ const Quiz = (props) => {
     setActiveElemLeft(-1);
     setActiveElemRight(-1);
     setMatches([]);
-    document.getElementById('check-message').innerHTML = ``;
     setLeftColumn(questions[currQues].leftColumn);
     setRightColumn(questions[currQues].rightColumn);
     setTotalMatch(0);
@@ -128,7 +127,6 @@ const Quiz = (props) => {
             score++;
         }
      }
-     document.getElementById('check-message').innerHTML = `You made ${score} correct answer${score>1?'s':''}.`
      scores[currQues] = score;
      setScores(scores);
      setIsChecked(true);
@@ -223,7 +221,7 @@ const Quiz = (props) => {
                 }
             </div>
         </div>
-        <div id="check-message"></div>
+        <div className={isChecked? "check_message":'hide'}>You made {scores[currQues]} correct answer{scores[currQues]>1?'s':''}.</div>
         <div className="button-container">
             <button disabled={totalMatch<questions[currQues].countOption} onClick={checkMatch} className="check-button">Check</button>
             <button onClick={nextQues} className="next-button">Next</button>

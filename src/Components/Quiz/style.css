@@ -142,7 +142,7 @@
     cursor: pointer;
 }
 
-#check-message{
+.check_message{
     font-family: 'Patrick Hand', cursive;
     font-size: 30px;
 }
