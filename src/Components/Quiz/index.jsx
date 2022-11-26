@@ -58,11 +58,7 @@ const Quiz = (props) => {
     if(currQues<n-1){
         setCurrentQues(currQues+1);
     }else{
-        document.getElementById('bar').style.width = "100%";
-        setTimeout(()=>{
-            setCurrentScreen('score');
-        },200)
-        
+        setCurrentScreen('score');
     }
   }
 
