@@ -11,7 +11,6 @@ const ScoreCard = (props) => {
   const [stars, setStars] = useState(0);
   const [score, setScore] = useState(0);
   const [maxScore, setMaxScore] = useState(0);
-  console.log(scores);
   useEffect(()=>{
     let maxScore = 0;
     let totalScore = 0;

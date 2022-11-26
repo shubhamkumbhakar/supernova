@@ -160,7 +160,6 @@ const Quiz = (props) => {
     if(activeElemLeft>=0 && activeElemLeft>=totalMatch && activeElemRight>=0 && activeElemRight>=totalMatch){
         matches[leftColumn[activeElemLeft].optionIndex] = rightColumn[activeElemRight].optionIndex;
         setMatches(matches);
-        console.log(matches);
 
         match();
         
