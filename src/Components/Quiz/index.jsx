@@ -169,7 +169,6 @@ const Quiz = (props) => {
         if(isChecked){
             return;
         }
-        console.log(matches);
         unMatch();
         setActiveElemLeft(-1);
         setActiveElemRight(-1);
