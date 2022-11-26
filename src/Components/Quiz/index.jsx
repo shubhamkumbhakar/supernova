@@ -10,7 +10,7 @@ const redCross = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-JVTN9B
 
 const Quiz = (props) => {
   const {questions=[], scores} = props.states;
-  
+  const {setCurrentScreen, setScores} = props.actions;
 
   const [nextButtonSound] = useState(new Audio(nextAudio));
   const [moveSound] = useState(new Audio(moveAudio));
@@ -19,14 +19,13 @@ const Quiz = (props) => {
   const [activeElemRight, setActiveElemRight] = useState(-1);
   const [leftColumn, setLeftColumn] = useState([]);
   const [rightColumn, setRightColumn] = useState([]);
-  const {setCurrentScreen, setScores} = props.actions;
   const [totalMatch, setTotalMatch] = useState(0);
   const [matches, setMatches] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
   const [imageSize, setImageSize] = useState(0);
 
 
-
+// reset function resets the changes in current coponent to render the new question in a fresh manner.
   const reset = () => {
     setActiveElemLeft(-1);
     setActiveElemRight(-1);
@@ -35,13 +34,10 @@ const Quiz = (props) => {
     setLeftColumn(questions[currQues].leftColumn);
     setRightColumn(questions[currQues].rightColumn);
     setTotalMatch(0);
-    for(let i=0;i<questions[currQues].leftColumn.length;i++){
-        document.getElementById(`imgLeft${i}`).style.backgroundColor = '#fff';
-        document.getElementById(`imgRight${i}`).style.backgroundColor = '#fff';
-    }
     setIsChecked(false);
   }
   
+// nextQues updates the question in the same component. If it was last question, then the component scorecard is rendered
   const nextQues = () =>{
     let score = 0;
     for(let i=0;i<totalMatch;i++){
@@ -65,6 +61,10 @@ const Quiz = (props) => {
     }
   }
 
+// unMatch() function unmatches the currently matched options. 
+// Currently matched options is identified if the index of that option is less than totalMatch done so far. 
+// leftColumns and right columns are shuffled as per the new order using multiple swaps.
+// totalMatch is decremented after one unmatch process is done.
   const unMatch = () => {
     moveSound.play();
     let i = activeElemLeft>=0?activeElemLeft:activeElemRight;
@@ -84,6 +84,11 @@ const Quiz = (props) => {
     setTotalMatch(totalMatch-1);
   }
 
+// match() function matches the currently unmatched options. 
+// Currently unmatched options is identified if the index of that option is greater than totalMatch done so far. 
+// new match are drilled up to the queue of matched pairs.
+// leftColumns and right columns are shuffled as per the new order using multiple swaps.
+// totalMatch is incremented after one match process is done.
   const match = () => {
     moveSound.play();
     let i = activeElemLeft;
@@ -106,6 +111,10 @@ const Quiz = (props) => {
     
   }
 
+  // This is executed when users request for check answer. 
+  // It calculates the score as per the user's matches and questions[currQues].correctMatch
+  // it updates the third column of green tick and red cross for user to see the correctness.
+  // isChecked state is updated to mark the visibility of third column of green tick and red cross.
   const checkMatch = () => {
     let score = 0;
      for(let i=0;i<totalMatch;i++){
@@ -119,6 +128,7 @@ const Quiz = (props) => {
      setIsChecked(true);
   }
 
+  // This method is to toggle the current selection in left column of options.
   const toggleSelectionLeft = (i) => {
     if(activeElemLeft===i){
         setActiveElemLeft(-1);
@@ -127,6 +137,7 @@ const Quiz = (props) => {
     }
   }
 
+// This method is to toggle the current selection in right column of options.
   const toggleSelectionRight = (i) => {
     if(activeElemRight===i){
         setActiveElemRight(-1);
@@ -135,6 +146,7 @@ const Quiz = (props) => {
     }
   }
 
+  // This method inside useEffect determines the size of images as per the count of options in current question
   useEffect(()=>{
     const size = 170/questions[currQues].countOption;
     setImageSize(size);
@@ -143,6 +155,7 @@ const Quiz = (props) => {
   },[currQues])
 
 
+  // This method inside useEffect is rendered evertime user clicks on options to match them or to unmatch them
   useEffect(()=>{
     if(activeElemLeft>=0 && activeElemLeft>=totalMatch && activeElemRight>=0 && activeElemRight>=totalMatch){
         matches[leftColumn[activeElemLeft].optionIndex] = rightColumn[activeElemRight].optionIndex;

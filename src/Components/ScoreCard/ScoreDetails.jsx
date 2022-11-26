@@ -19,7 +19,7 @@ const ScoreDetails = (props) => {
         {
           scores.map((score,i)=>{
             return(
-              <div className='score_details_bar_wrapper'>
+              <div key={i} className='score_details_bar_wrapper'>
                 <div className='score_details_qindex'>Q{i+1}</div>
                 <div className="score_details_bar_container">
                     <div className='score_details_bar' id={`score_details_bar${i}`}>
