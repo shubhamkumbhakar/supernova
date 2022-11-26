@@ -20,7 +20,13 @@ const Quiz = (props) => {
   const [leftColumn, setLeftColumn] = useState([]);
   const [rightColumn, setRightColumn] = useState([]);
   const [totalMatch, setTotalMatch] = useState(0);
+
   const [matches, setMatches] = useState([]);
+  // matches are stored as an array of indexes of the right column.
+  // The array index itself represent is the left column.
+  // if user matches leftColumn[i] with rightColumn[j], it is stored as matches[i]=j.
+  // In the same way, the correct matches is present inside the question's data inside questions[currQues].correctMatch.
+
   const [isChecked, setIsChecked] = useState(false);
   const [imageSize, setImageSize] = useState(0);
 
