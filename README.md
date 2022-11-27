@@ -1,8 +1,8 @@
 # Supernova Quiz App
 
-# The app is live on: 
-https://shubhamkumbhakar.github.io/supernova, 
-https://quiz-supernova.netlify.app
+The app is live on: 
+-> https://shubhamkumbhakar.github.io/supernova, 
+-> https://quiz-supernova.netlify.app
 
 This project is created using React 18
 The package dependencies added are:
