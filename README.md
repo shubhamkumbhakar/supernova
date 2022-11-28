@@ -4,10 +4,13 @@ The app is live on:
 -> https://shubhamkumbhakar.github.io/supernova, 
 -> https://quiz-supernova.netlify.app
 
-This project is created using React 18
+This project is created using React 18.2.0
 The package dependencies added are:
 1) react-lottie
 2) axios
+
+Node version: 16.13.0
+npm version: 8.1.0
 
 To run the app in your local
 ### Clone the repository and `npm i` -> `npm start` to start the app
